@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="156.87015mm"
+   height="129.58647mm"
+   viewBox="0 0 156.87015 129.58647"
+   version="1.1"
+   id="svg5"
+   inkscape:version="1.1.1 (26b7af14f2, 2022-01-19)"
+   sodipodi:docname="logo.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview7"
+     pagecolor="#ffffff"
+     bordercolor="#666666"
+     borderopacity="1.0"
+     inkscape:pageshadow="2"
+     inkscape:pageopacity="0.0"
+     inkscape:pagecheckerboard="0"
+     inkscape:document-units="mm"
+     showgrid="false"
+     inkscape:zoom="0.64052329"
+     inkscape:cx="281.80084"
+     inkscape:cy="397.33138"
+     inkscape:window-width="1848"
+     inkscape:window-height="1016"
+     inkscape:window-x="72"
+     inkscape:window-y="27"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs2">
+    <rect
+       x="119.54566"
+       y="763.73718"
+       width="612.82349"
+       height="63.897137"
+       id="rect17926" />
+    <rect
+       x="124.6381"
+       y="770.34381"
+       width="598.90924"
+       height="41.818909"
+       id="rect9516" />
+  </defs>
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-32.360494,-84.943653)">
+    <path
+       id="path869"
+       style="fill:#000000;fill-opacity:1;stroke:none;stroke-width:0.264583px;stroke-linecap:butt;stroke-linejoin:miter;stroke-opacity:1"
+       d="M 139.77958,84.943653 V 108.26987 H 128.95079 V 85.376699 H 34.478002 l 27.64224,38.449851 h 27.262936 l -15.799554,15.29777 10.115661,13.70459 29.053525,-26.7472 v 65.31074 l 17.24236,-23.61251 v -43.64075 h 10.0769 v 28.72228 l 19.01383,-26.81128 v -21.79506 h 14.51229 L 187.11313,84.943653 Z M 67.400023,100.69308 h 44.952297 v 8.96948 H 74.505533 Z" />
+    <text
+       xml:space="preserve"
+       transform="scale(0.26458333)"
+       id="text17924"
+       style="font-style:normal;font-variant:normal;font-weight:normal;font-stretch:normal;font-size:46.6667px;line-height:1.25;font-family:sans-serif;-inkscape-font-specification:'sans-serif, Normal';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;letter-spacing:0px;word-spacing:0px;white-space:pre;shape-inside:url(#rect17926);fill:#000000;fill-opacity:1;stroke:none" />
+    <text
+       xml:space="preserve"
+       style="font-style:normal;font-weight:normal;font-size:10.5833px;line-height:1.25;font-family:sans-serif;letter-spacing:0px;word-spacing:0px;fill:#090000;fill-opacity:1;stroke:none;stroke-width:0.264583"
+       x="31.344494"
+       y="214.23802"
+       id="text23696"><tspan
+         sodipodi:role="line"
+         id="tspan23694"
+         style="font-style:normal;font-variant:normal;font-weight:600;font-stretch:normal;font-size:12.7px;font-family:FreeSans;-inkscape-font-specification:'FreeSans, Semi-Bold';font-variant-ligatures:normal;font-variant-caps:normal;font-variant-numeric:normal;font-variant-east-asian:normal;fill:#090000;fill-opacity:1;stroke-width:0.264583"
+         x="31.344494"
+         y="214.23802">RECREATIONAL HAZARD</tspan></text>
+  </g>
+</svg>
