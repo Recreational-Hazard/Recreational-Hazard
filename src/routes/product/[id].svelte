@@ -1,6 +1,5 @@
 <script context="module" lang="ts">
   import type { LoadInput } from "$utils/types/load";
-  // import {Load} from '@sveltejs/kit';
 
   export async function load({ params, fetch, session, stuff }: LoadInput) {
     const url = `https://fakestoreapi.com/products/${params.id}`;
@@ -8,8 +7,8 @@
 
     if (res.ok) {
       return {
-        stuff: {
-          product: await res.json(),
+        props: {
+          data: await res.json(),
         },
       };
     }
@@ -21,7 +20,6 @@
 </script>
 
 <script lang="ts">
-  import { page } from "$app/stores";
   import { fly, fade } from "svelte/transition";
   import type { FlyParams } from "svelte/transition";
   import ReviewForm from "../../components/ReviewForm.svelte";
@@ -30,14 +28,15 @@
   import { onMount } from "svelte";
   import Rating from "../../components/Rating.svelte";
 
+  export let data:any;
   let product: Product;
   let showChart = false;
   const flyParam: FlyParams = { y: 300, duration: 400 };
 
   onMount(() => {
     product = {
-      ...$page.stuff.product,
-      rating: $page.stuff.product.rating?.rate,
+      ...data,
+      rating: data.rating?.rate,
     };
     console.log(product);
   });

@@ -10,15 +10,15 @@ export interface Product {
     [key: string]: any
 }
 
-export interface User {
-    id: string | number,
+export interface UserData {
+    id: string,
     name: string,
     email: string,
-    phone?: number
+    phone?: string
 }
 
 export interface Comment {
-    id: string | number,
+    id: string,
     userId: string | number,
     productId: string | number,
     date: Date,

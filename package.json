@@ -4,13 +4,18 @@
   "scripts": {
     "dev": "svelte-kit dev",
     "build": "svelte-kit build",
-    "package": "svelte-kit package",
-    "preview": "svelte-kit preview",
     "check": "svelte-check --tsconfig ./tsconfig.json",
-    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch"
+    "check:watch": "svelte-check --tsconfig ./tsconfig.json --watch",
+    "package": "svelte-kit package",
+    "preinstall": "npx force-resolutions",
+    "preview": "svelte-kit preview"
+  },
+  "resolutions": {
+    "node-fetch": "2.6.7"
   },
   "devDependencies": {
     "@sveltejs/adapter-auto": "next",
+    "@sveltejs/adapter-static": "^1.0.0-next.26",
     "@sveltejs/kit": "next",
     "svelte": "^3.46.2",
     "svelte-check": "^2.3.0",
@@ -21,6 +26,6 @@
   "type": "module",
   "dependencies": {
     "firebase": "^9.6.4",
-    "node-fetch": "^3.2.0"
+    "node-fetch": "2.6.7"
   }
 }

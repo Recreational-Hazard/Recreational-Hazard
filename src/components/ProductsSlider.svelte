@@ -29,7 +29,7 @@ import Rating from "./Rating.svelte";
     {:then}
       {#if products.length}
         {#each products as product}
-        <a class="un-a d-block" href={`product/${product.id}`}>
+        <a class="un-a d-grid align-self-stretch justify-content-center" href={`product/${product.id}`}>
           <div
             class="product product_hover d-grid justify-content-center align-items-stretch"
           >
@@ -39,7 +39,7 @@ import Rating from "./Rating.svelte";
               alt={product.title}
             />
             <div class="d-grid p-1">
-              <h5 class="title">{product.title}</h5>
+              <h5 class="title fw-bold h6">{product.title}</h5>
               <span class=" text-secondary text-capitalize">
                 {product.category}
               </span>
@@ -60,7 +60,7 @@ import Rating from "./Rating.svelte";
 
 <style>
   .products {
-    grid-template-columns: repeat(auto-fit, minmax(265px, 1fr));
+    grid-template-columns: repeat(auto-fit, minmax(calc(180px + 2vw), 1fr));
     grid-gap: 1vw;
     gap: 1vw;
   }
@@ -74,10 +74,6 @@ import Rating from "./Rating.svelte";
   }
   img {
     aspect-ratio: 3.5/4;
-  }
-  .title {
-    font-size: 18px;
-    font-weight: bold;
   }
   .product_hover:hover {
     border-color: #fff !important;

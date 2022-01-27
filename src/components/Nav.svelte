@@ -7,6 +7,8 @@ import CategoryDd from "./CategoryDD.svelte";
     { name: "New", href: "/", type: "link" },
     { name: "Fashion", href: "/", type: "link" },
   ];
+
+  export let known = false;
 </script>
 
 <div class="nav-container">
@@ -39,8 +41,12 @@ import CategoryDd from "./CategoryDD.svelte";
         <a type="button" href="/auth"
           class="btn btn-sm btn-primary d-sm-none d-flex align-items-center justify-content-center gap-1"
         >
+        {#if !known}
+          <span class="spinner-border spinner-border-sm" />
+        {:else}
           <b>LOGIN</b><span class="material-icons">login</span>
-        </a>
+        {/if}
+      </a>
       </li>
     </ul>
   </nav>

@@ -11,7 +11,7 @@
 
 <div class="py-4 px-1">
     <h2 class="my-1 fw-bold mx-2 h1 font-wendy text-center"> And what's our client's response ? </h2>
-    <div class="py-2 my-2 d-flex overflow-auto gap-3 align-items-stretch scrollbar">
+    <div class="py-2 my-2 d-flex overflow-auto gap-3 align-items-stretch scrollbar outline-none" tabindex="0">
         {#each Reviews as review, i}
             <div class="p-1 review position-relative">
                 {#if review.photo}

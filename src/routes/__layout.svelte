@@ -4,7 +4,9 @@
   import Nav from "../components/Nav.svelte";
   import { navigating } from "$app/stores";
   import Data from "../../static/data.json";
-import { FacebookIcon, InstagramIcon } from "../components/icons";
+  import { FacebookIcon, InstagramIcon } from "../components/icons";
+  import { auth } from "../utils/firebase/auth";
+  import { browser } from "$app/env";
 </script>
 
 <svelte:head>
@@ -51,18 +53,32 @@ import { FacebookIcon, InstagramIcon } from "../components/icons";
       </div>
 
       <div class="d-flex align-items-center justify-content-evenly mx-1">
-        <a href="/auth" class="d-none d-sm-flex">
-          <button
-            class="btn btn-sm btn-primary d-none d-sm-flex align-items-center justify-content-evenly gap-1"
-          >
-            <b>LOGIN</b><span class="material-icons">login</span>
-          </button>
-        </a>
+        {#if browser}
+          {#if $auth.user}
+            <img
+              class="avatar"
+              src={$auth.user.photoURL || "/assets/default-avatar.png"}
+              alt={$auth.user.displayName}
+            />
+          {:else}
+            <a href="/auth" class="d-none d-sm-flex">
+              <button
+                class="btn btn-sm btn-primary d-none d-sm-flex align-items-center justify-content-evenly gap-1 rounded-0"
+              >
+                {#if !$auth.known}
+                  <span class="spinner-border spinner-border-sm" />
+                {:else}
+                  <b>LOGIN</b><span class="material-icons">login</span>
+                {/if}
+              </button>
+            </a>
+          {/if}
+        {/if}
       </div>
     </div>
   </header>
   <hr class="my-1" />
-  <Nav />
+  <Nav known={$auth.known} />
 </div>
 <slot />
 <footer class="text-white bg-dark pt-3 px-3">
@@ -97,8 +113,15 @@ import { FacebookIcon, InstagramIcon } from "../components/icons";
         alt="Recreational hazard's logo"
       />
       <div class="d-flex gap-3">
-        <a class="d-block" href="https://www.facebook.com/groups/335811371130292"> <FacebookIcon style="width: 32px; height: auto;"/> </a>
-        <a class="d-block" href="/"> <InstagramIcon style="width: 32px; height: auto;"/> </a>
+        <a
+          class="d-block"
+          href="https://www.facebook.com/groups/335811371130292"
+        >
+          <FacebookIcon style="width: 32px; height: auto;" />
+        </a>
+        <a class="d-block" href="/">
+          <InstagramIcon style="width: 32px; height: auto;" />
+        </a>
       </div>
     </div>
     <small>© All rights reserved. Developed Khandakar Shakib</small>
