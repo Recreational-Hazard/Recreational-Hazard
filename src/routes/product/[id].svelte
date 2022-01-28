@@ -27,6 +27,7 @@
   import type { Product } from "src/utils/types";
   import { onMount } from "svelte";
   import Rating from "../../components/Rating.svelte";
+  import NotFound from "../../components/Error.svelte";
 
   export let data:any;
   let product: Product;
@@ -132,5 +133,7 @@
         </div>
       </div>
     </div>
+    {:else}
+    <NotFound/>
   {/if}
 </div>
