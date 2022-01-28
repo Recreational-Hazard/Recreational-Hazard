@@ -34,7 +34,7 @@
       >
         <img
           class="logo"
-          src="/static/assets/logo.svg"
+          src="/assets/logo.svg"
           alt="Recreational hazard"
         />
       </a>
@@ -108,7 +108,7 @@
     <hr />
     <div class="py-2 d-flex justify-content-between align-items-center">
       <img
-        src="/static/assets/logo.svg"
+        src="/assets/logo.svg"
         style="width: 100px; filter:invert(1)"
         alt="Recreational hazard's logo"
       />

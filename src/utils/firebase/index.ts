@@ -1,8 +1,9 @@
 import { initializeApp } from "firebase/app";
 import type { FirebaseOptions } from 'firebase/app';
 import { initializeAppCheck, ReCaptchaV3Provider } from "firebase/app-check";
+import { browser } from "$app/env";
 
-const firebaseConfig:FirebaseOptions = {
+const firebaseConfig: FirebaseOptions = {
     apiKey: "AIzaSyCFFbprkGnN8jJJrcynfWzgSmyxpGRnNFc",
     authDomain: "recreational-hazard.firebaseapp.com",
     projectId: "recreational-hazard",
@@ -15,6 +16,8 @@ const firebaseConfig:FirebaseOptions = {
 
 // Initialize Firebase
 export const app = initializeApp(firebaseConfig);
-const appCheck = initializeAppCheck(app, {
-    provider: new ReCaptchaV3Provider('6LduwTgeAAAAAOc2NnP9_bW2KH_qQ3hiQ1ww9FRv')
-})
+if (browser) {
+    const appCheck = initializeAppCheck(app, {
+        provider: new ReCaptchaV3Provider('6LduwTgeAAAAAOc2NnP9_bW2KH_qQ3hiQ1ww9FRv')
+    })
+}

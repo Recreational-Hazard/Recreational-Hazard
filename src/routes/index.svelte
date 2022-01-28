@@ -21,7 +21,7 @@ import ProductsSlider from "../components/ProductsSlider.svelte";
       <button class="btn btn-success mt-2 mb-3"> Check out </button>
     </div>
     <img
-      src="/static/assets/friday_sale.webp"
+      src="/assets/friday_sale.webp"
       class="w-100 max-width-500"
       alt="Friday sale"
     />
@@ -30,7 +30,7 @@ import ProductsSlider from "../components/ProductsSlider.svelte";
 
 <div class="py-3 my-3 container my-1 d-grid gap-2 text-sm-end text-center align-items-center justify-content-evenly text-by-img-2">
   <img
-      src="/static/assets/custom-stickers.jpg"
+      src="/assets/custom-stickers.jpg"
       class="w-100 max-width-500 shadow rounded-3"
       alt="Custom sticker service"
     />
@@ -44,7 +44,7 @@ import ProductsSlider from "../components/ProductsSlider.svelte";
 
 <div class="w-100">
   <img
-    src="/static/assets/web_bg.jpg"
+    src="/assets/web_bg.jpg"
     alt="Cover 2"
     class="w-100 max-height-400"
   />
