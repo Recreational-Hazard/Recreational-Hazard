@@ -10,11 +10,12 @@ import {
     getRedirectResult,
     updateProfile,
     signInWithEmailAndPassword,
-    createUserWithEmailAndPassword as signUp
+    createUserWithEmailAndPassword as signUp,
+    sendPasswordResetEmail,
 } from "firebase/auth";
 import type { User } from "firebase/auth";
 import { app } from "./index";
-import { addUser } from "./fstore";
+import { addUser, updateUser } from "./fstore";
 import type { UserData } from "$utils/types";
 
 export interface AuthState {
@@ -70,7 +71,7 @@ const createAuth = () => {
         await updateProfile(user, { displayName: name });
         await getUserDataAndAdd(user);
     }
-    
+
     async function signOut() {
         const auth = getAuth(app);
         await _signOut(auth);
@@ -86,7 +87,28 @@ const createAuth = () => {
 
 export const auth = createAuth();
 
-async function getUserDataAndAdd (user: User) {
+export const changePassword = async (email: string) => {
+    const auth = getAuth(app);
+    await sendPasswordResetEmail(auth, email);
+    return (`Check your inbox. password reset link sent to ${email}`);
+}
+
+
+export const changeUserDetails = async (user: User, { displayName = "", phoneNumber = "" }) => {
+
+    if (displayName) {
+        await updateProfile(user, {
+            displayName: displayName,
+        })
+        await updateUser(user.uid, { name: displayName })
+    }
+
+    if (phoneNumber) {
+        await updateUser(user.uid, { phone: phoneNumber })
+    }
+}
+
+async function getUserDataAndAdd(user: User) {
     const userData: UserData = {
         id: user.uid,
         email: user.email,
@@ -95,3 +117,4 @@ async function getUserDataAndAdd (user: User) {
     };
     await addUser(userData);
 }
+

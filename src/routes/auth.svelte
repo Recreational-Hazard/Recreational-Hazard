@@ -1,5 +1,4 @@
 <script lang="ts">
-  import { fly } from "svelte/transition";
   import { FacebookIcon, GoogleIcon } from "../components/icons";
   import { Tab, TabList, TabPanel, Tabs } from "../components/Tab";
   import { getFormData } from "../utils";
@@ -76,7 +75,7 @@
 </script>
 
 {#if error && error.show && error.message}
-  <div transition:fly={{ duration: 350, y: -200 }}>
+
     <Modal>
       <h3 slot="heading"><b> Error occured </b></h3>
       <button
@@ -85,7 +84,7 @@
       />
       <p slot="content">{error.message}</p>
     </Modal>
-  </div>
+
 {/if}
 
 {#if !browser || !$auth.known}

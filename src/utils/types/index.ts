@@ -1,3 +1,5 @@
+import type { FieldValue, Timestamp } from "@firebase/firestore";
+
 export interface Product {
     id: string | number,
     title: string,
@@ -22,5 +24,39 @@ export interface Comment {
     userId: string | number,
     productId: string | number,
     date: Date,
-    replyOf?: string | number
+    reply_of?: string | number
+}
+export interface Cart {
+    id?: string,
+    product_id: string,
+    product_name: string,
+    quantity: number, // Number of products that a buyer / client will buy
+    price: number,
+    user_id?: string,
+}
+
+export type DeliveryType = 'cod' | 'bkash' | 'rocket';
+export interface Delivery {
+    id?: string,
+    type: DeliveryType,
+    date: Date | Timestamp | FieldValue,
+    user: Readonly<UserData>,
+    products: {
+        product_name: string,
+        quantity: number,
+        price: number,
+        product_id: string,
+    }[],
+    total_price: number,
+    address: string,
+    delivered: {
+        delivered_by?: string,
+        delivered: boolean,
+    }
+}
+
+export interface CancelDelivery {
+    delivery_id: string,
+    reason?: string,
+    date: Date | Timestamp | FieldValue,
 }
