@@ -27,6 +27,7 @@
   "type": "module",
   "dependencies": {
     "firebase": "^9.6.4",
-    "node-fetch": "2.6.7"
+    "node-fetch": "2.6.7",
+    "nprogress": "^0.2.0"
   }
 }

@@ -4,16 +4,13 @@ import { app } from './index';
 
 const db = getFirestore(app)
 
-export const addUser = async (userdata: UserData) => {
-    const ref = doc(db, "users", userdata.id);
-    const res = await setDoc(ref, userdata).catch(err => console.error(err))
-    console.log(res);
-}
 
-export const updateUser = async (user_id:string, details={}) => {
+type AdditionalData = {email?: string, phoneNumber?: number, address?: string, [key:string]:any}
+
+export const setUser = async (user_id: string, AdditionalData:AdditionalData) => {
+    const {email,address,phoneNumber} = AdditionalData;
     const ref = doc(db, "users", user_id);
-    
-    const res = await updateDoc(ref, { ...details }).catch(err => console.error(err))
+    const res = await setDoc(ref, { email, phoneNumber, address }).catch(err => console.error(err))
     console.log(res);
 }
 
@@ -44,7 +41,7 @@ type OrderDetail = {
 export const order = async (user: UserData, order_details: OrderDetail) => {
     const deliveries = collection(db, "deliveries");
     const { address, products, total_price, type } = order_details;
-    
+
     const delivery: Delivery = {
         address,
         products,

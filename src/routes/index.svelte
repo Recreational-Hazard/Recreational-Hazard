@@ -21,7 +21,7 @@ import ProductsSlider from "../components/ProductsSlider.svelte";
       <button class="btn btn-success mt-2 mb-3"> Check out </button>
     </div>
     <img
-      src="/assets/friday_sale.webp"
+      src="/assets/friday_sale.jpg"
       class="w-100 max-width-500"
       alt="Friday sale"
     />
@@ -58,7 +58,7 @@ import ProductsSlider from "../components/ProductsSlider.svelte";
   }
   .background-1 {
     background: linear-gradient(rgba(0, 0, 0, 0.56), rgba(0, 0, 0, 0.56)),
-      url("/static/assets/img-1.webp") center center / cover no-repeat;
+      url("/static/assets/img-1.jpg") center center / cover no-repeat;
   }
   .text-by-img > div{
     grid-row: 2;

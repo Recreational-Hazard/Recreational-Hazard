@@ -22,7 +22,7 @@
   {#if expanded}
   <div
     class="contents border-1 border rounded-bottom rounded-1 p-1"
-    transition:slide={transOps}
+    transition:slide|local={transOps}
   >
     <slot />
   </div>

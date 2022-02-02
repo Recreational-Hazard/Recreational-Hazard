@@ -13,10 +13,9 @@ import {
     createUserWithEmailAndPassword as signUp,
     sendPasswordResetEmail,
 } from "firebase/auth";
-import type { User } from "firebase/auth";
 import { app } from "./index";
-import { addUser, updateUser } from "./fstore";
-import type { UserData } from "$utils/types";
+import { setUser } from "./fstore";
+import type { User } from "firebase/auth";
 
 export interface AuthState {
     user: User | null;
@@ -62,26 +61,42 @@ const createAuth = () => {
         const provider = providerFor(name);
         await signInWithRedirect(auth, provider);
         const { user } = await getRedirectResult(auth);
-        await getUserDataAndAdd(user);
     }
 
     async function signUpWithEmail(name: string, email: string, password: string) {
         const auth = getAuth(app);
         const { user } = await signUp(auth, email, password);
         await updateProfile(user, { displayName: name });
-        await getUserDataAndAdd(user);
+        await setUser(user.uid, { email, phoneNumber: null, address: "" });
+        await changePassword(email);
     }
 
+    async function signIn(email:string, password: string) {
+        const auth = getAuth(app);
+        await signInWithEmailAndPassword(auth, email, password);
+    }
+    
     async function signOut() {
         const auth = getAuth(app);
         await _signOut(auth);
     }
 
+    async function updateUserData(user: User, { displayName = "", phoneNumber = 0 }) {
+        if (displayName) {
+            await updateProfile(user, { displayName });
+        }
+        if (phoneNumber) {
+            await setUser(user.uid, { phoneNumber });
+        }
+    }
+
     return {
         subscribe,
         signInWith,
+        signIn,
         signOut,
         signUpWithEmail,
+        updateUserData,
     };
 };
 
@@ -92,29 +107,3 @@ export const changePassword = async (email: string) => {
     await sendPasswordResetEmail(auth, email);
     return (`Check your inbox. password reset link sent to ${email}`);
 }
-
-
-export const changeUserDetails = async (user: User, { displayName = "", phoneNumber = "" }) => {
-
-    if (displayName) {
-        await updateProfile(user, {
-            displayName: displayName,
-        })
-        await updateUser(user.uid, { name: displayName })
-    }
-
-    if (phoneNumber) {
-        await updateUser(user.uid, { phone: phoneNumber })
-    }
-}
-
-async function getUserDataAndAdd(user: User) {
-    const userData: UserData = {
-        id: user.uid,
-        email: user.email,
-        phone: user.phoneNumber,
-        name: user.displayName,
-    };
-    await addUser(userData);
-}
-

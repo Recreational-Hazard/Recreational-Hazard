@@ -15,22 +15,16 @@ export function nameToRgba(name: string) {
 }
 
 type ImageMimeType = 'image/bmp' | 'image/gif' | 'image/jpeg' | 'image/png' | 'image/tiff';
-interface ImageConfigOptions {
-    MAX_HEIGHT?: number,
-    MAX_WIDTH?: number,
-    MIME_TYPE?: ImageMimeType,
-    quality?: number,
-}
 
 export function compressImage(
-    file: File,
-    callBack?: (imageData:string | ArrayBuffer) => void,
-    config: ImageConfigOptions = {
-        MAX_WIDTH: 800, MAX_HEIGHT: 800, MIME_TYPE: 'image/jpeg', quality: 0.8
-    }) {
+    file: File, {
+        MAX_WIDTH = 600, MAX_HEIGHT = 600, MIME_TYPE = 'image/png', quality = 0.7, output = "string"
+    },
+    callBack?: (imageData: string | Blob) => void,
+) {
 
-        if (document) {
-        let ImageData:string;
+    if (document) {
+        let ImageData: Blob | string;
         const blobUrl = URL.createObjectURL(file);
         const img = new Image();
         img.src = blobUrl;
@@ -42,41 +36,70 @@ export function compressImage(
 
         img.onload = () => {
             URL.revokeObjectURL(img.src)
-            const [newW, newH] = calculateSize(img, config.MAX_WIDTH, config.MAX_HEIGHT);
+            const [newW, newH] = calculateSize(img, MAX_WIDTH, MAX_HEIGHT);
             const canvas = document.createElement('canvas');
             canvas.width = newW;
             canvas.height = newH;
             const ctx = canvas.getContext('2d');
             ctx.drawImage(img, 0, 0, newW, newH);
-            canvas.toBlob((blob) => {
-                const reader = new FileReader();
-                reader.readAsDataURL(blob);
-                reader.onload = () =>{
-                    ImageData = reader.result.toString();
-                    callBack(reader.result);
+
+            canvas.toBlob(blob => {
+                if (output === "blob") {
+                    ImageData = blob;
+                    console.log(blob.type, newW, newH,)
+                    callBack(ImageData.size < file.size ? ImageData : file);
                 }
-            }, config.MIME_TYPE, config.quality)
+                else {
+                    const reader = new FileReader();
+                    reader.readAsDataURL(blob);
+                    reader.onload = () => {
+                        ImageData = reader.result.toString();
+                        callBack(blob.size < file.size ? reader.result.toString() : toBase64(file));
+                    }
+                }
+
+            }, MIME_TYPE, quality)
         }
         return ImageData
 
     }
 }
 
+function toBase64 (file:File) {
+    let base64:string;
+    const reader = new FileReader();
+
+    reader.readAsDataURL(file);
+
+    reader.onerror = (error) => {
+        console.log(error);
+        throw new Error("Error occured");
+        return
+    }
+
+    reader.onload = () => base64 = reader.result.toString();
+    return base64;
+
+}
 
 function calculateSize(img: HTMLImageElement, maxWidth: number, maxHeight: number) {
     let width = img.width;
     let height = img.height;
 
     if (width > height) {
+
         if (width > maxWidth) {
             height = Math.round((height * maxWidth) / width);
             width = maxWidth;
         }
+
     } else {
+
         if (height > maxHeight) {
             width = Math.round((width * maxHeight) / height);
             height = maxHeight;
         }
     }
+
     return [width, height];
 }

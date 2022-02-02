@@ -1,30 +1,38 @@
 <script lang="ts">
-  import { FacebookIcon, GoogleIcon } from "../components/icons";
   import { Tab, TabList, TabPanel, Tabs } from "../components/Tab";
   import { getFormData } from "../utils";
-  import Modal from "../components/Modal.svelte";
   import { auth } from "../utils/firebase/auth";
   import { goto } from "$app/navigation";
   import { onDestroy } from "svelte";
   import { browser } from "$app/env";
+  import { notice } from "../utils/store";
 
-  let error: { show: boolean; [key: string]: any } = { show: true };
   let signingIn = false;
 
   $: unsubscribe = auth.subscribe(async ({ user, known }) => {
     if (user) {
       if (!user.emailVerified) await goto("/verification");
-      await goto("/"); //Might change it later...
+      else {
+        await goto("/u");
+      }
     }
   });
 
   onDestroy(() => unsubscribe());
 
-  function onLogin(
+  async function onLogin(
     event: SubmitEvent & { currentTarget: EventTarget & HTMLFormElement }
   ) {
     const data = getFormData(event);
-    /** */
+    try {
+      signingIn = true;
+      const {email, password} = data;
+      await auth.signIn(email.toString(), password.toString());
+
+    } catch (error) {
+      notice.set({ show: true, message: error.message, type: "error" });
+      signingIn = false;
+    }
   }
 
   function onSignUp(
@@ -47,52 +55,22 @@
           });
       } catch (err) {
         console.log(err);
-        error = { ...err, message: err.message };
+        notice.set({ show: true, message: err.message, type: "error" });
+
       }
     } else {
-      error.clientError = "Confirm password does not match!";
+      notice.set({clientError: "Confirm password does not match!", show: false})
       signingIn = false;
     }
   }
 
-  async function googleSignIn() {
-    try {
-      signingIn = true;
-      await auth.signInWith("google");
-      signingIn = false;
-    } catch (err) {
-      console.log(err);
-      error = { message: err.message, show: true };
-      signingIn = false;
-    }
-  }
-
-  async function facebookSignIn() {}
-
-  function closeModal() {
-    error = null;
-  }
 </script>
-
-{#if error && error.show && error.message}
-
-    <Modal>
-      <h3 slot="heading"><b> Error occured </b></h3>
-      <button
-        class="btn btn-close p-2 rounded-circle bg-white"
-        on:click={closeModal}
-      />
-      <p slot="content">{error.message}</p>
-    </Modal>
-
-{/if}
 
 {#if !browser || !$auth.known}
   <div class="py-2">
     <span class="spinner-border" />
   </div>
 {:else}
-
   <div class="container py-4 d-grid align-items-center form-container">
     <div>
       <div
@@ -137,10 +115,6 @@
               <button class="btn mb-2">Forgot password ?</button>
             </div>
             <br />
-            <div class="text-center mb-2 hr-before hr-after">
-              Or sign in with
-            </div>
-            <br />
           </TabPanel>
 
           <TabPanel>
@@ -179,30 +153,19 @@
                 placeholder="Confirm password"
                 required
               />
-              {#if error && error.clientError}
+              {#if $notice && $notice.clientError}
                 <div
                   class="d-flex align-items-center justify-content-between my-2 alert alert-danger"
                 >
-                  <span class="p-1">{error.clientError}</span>
-                  <button class="btn btn-close" on:click={closeModal} />
+                  <span class="p-1">{$notice.clientError}</span>
+                  <button class="btn btn-close" on:click={() =>notice.set({clientError:null, show: false})} />
                 </div>
               {/if}
               <button class="btn btn-primary rounded-0 px-5" type="submit">
                 Sign up
               </button>
             </form>
-            <div class="text-center hr-before hr-after my-2">
-              Or sign up with
-            </div>
           </TabPanel>
-          <div class="mx-auto text-center">
-            <button class="btn" on:click={googleSignIn}>
-              <GoogleIcon style="width:45px; height:45px" />
-            </button>
-            <button class="btn" on:click={facebookSignIn}>
-              <FacebookIcon style="width:45px; height:45px" />
-            </button>
-          </div>
         </Tabs>
       </div>
     </div>
